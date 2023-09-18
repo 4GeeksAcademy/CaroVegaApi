@@ -24,8 +24,7 @@ const update = () =>{
 	    }
 	
     })
-    .then(data => {console.log("este es el body del request", data);
-    setTasks(data);})
+    .then(data => {console.log(data);})
     .catch(error => console.error(error));
     }    
 
@@ -64,6 +63,11 @@ function offdelete(){
     }
     setinVisible(inv)
 }
+
+useEffect(() => {
+   update(elementlist);
+  }, [elementlist]);
+
 	return (
             
                 <div className="tasklist" >
