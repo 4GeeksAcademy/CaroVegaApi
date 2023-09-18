@@ -1,20 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {AiFillCloseCircle} from "react-icons/ai";
 
 
 const List = ( ) => {
     const [elementlist, setElementList]=useState([]);
-    const [change, setChange]= useState("");
+    const [change, setChange]= useState({});
     const [invisible, setinVisible]= useState([]);
 
+const update = () =>{
+    fetch('https://playground.4geeks.com/apis/fake/todos/user/caro', {
+    method: 'PUT', // or 'POST'
+    body: JSON.stringify(data), // los datos pueden ser una `cadena` o un {objeto} que proviene de algún lugar más arriba en nuestra aplicación
+    headers:{
+    'Content-Type': 'application/json'
+    }
+    })
+    .then(res => {
+	    if (res.status>= 200 && res.status<=300){
+		    console.log("el request se hizo bien");
+		    return res.json();
+	    }else{
+		console.log(`hubo un error ${res.status} en el request`)
+	    }
+	
+    })
+    .then(data => {console.log("este es el body del request", data);
+    setTasks(data);})
+    .catch(error => console.error(error));
+    }    
+
 function  handleOnChange (e) {
-    setChange(e.target.value);
+    setChange({label:e.target.value, done:false});
 }   
 function handleKeyDown (event) {
         if(event.key =='Enter')
         { 
             setElementList(current => [...current, change]);
-            setChange("");
+            setChange({label:"",done:false});
     }
       }
 
@@ -46,12 +68,12 @@ function offdelete(){
             
                 <div className="tasklist" >
                     <div className="uptask">
-                        <input type="text" className="formtask" id="text" placeholder="What needs to be done?"  value={change} onKeyDown={handleKeyDown} onChange={handleOnChange}/>
+                        <input type="text" className="formtask" id="text" placeholder="What needs to be done?"  value={change.label} onKeyDown={handleKeyDown} onChange={handleOnChange}/>
                     </div>
                     <div className="tasktext">
                         <ul>{elementlist.map((thingdo, index)=>
                              <div className={"element py-2 " + index} key={index} onMouseEnter={activedelete} onMouseLeave={offdelete}  >
-                                <li className="list pl-1">{thingdo}</li>
+                                <li className="list pl-1">{thingdo.label}</li>
                                 <div className="delete" id={index} style={{opacity:invisible.length != 0 ? invisible[index]:0 }}  onClick={()=>eliminartarea({index})} ><AiFillCloseCircle/></div>
                             </div>)}
                         </ul>
