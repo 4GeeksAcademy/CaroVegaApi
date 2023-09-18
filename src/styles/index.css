@@ -10,3 +10,137 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+
+.contenedor{
+    display:flex;
+    justify-content: center;
+}
+.conteinertasks{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    min-height: 500px;
+}
+
+.tasks{
+    display: flex;
+    flex-direction: column;
+    
+}
+.tasklist{
+    width: 330px;
+    min-height: 100px;
+    background-color: rgb(238, 235, 235);
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.6;
+    border:2px solid gray;
+    border-bottom: 3px solid gray;
+    border-style: groove;
+}
+.uptask{
+    width:330px;
+    display:flex;
+    justify-content: center;
+
+}
+.tasktext{
+    width:327px;
+    display:flex;
+    background-color: rgba(231, 230, 230, 0.937);
+}
+.element{
+    width: 325px;
+    min-height:30px;
+    font-size: 20px;
+    font-family: 'Unbounded', sans-serif;
+    color:rgb(134, 132, 132);
+    display:flex;
+    align-items: center;
+    overflow-wrap: anywhere;
+    justify-content: space-between;
+    margin-left: -31px;
+    border-bottom: 1px solid gray;
+    background-color: rgba(231, 230, 230, 0.937);
+    
+}
+.delete{
+ width:25px;
+ height: 25px;
+
+}
+
+
+.numbertasks{
+    width: 325px;
+    height:47px;
+    border-bottom: 1px solid gray;
+    border-left: 1px solid rgba(206, 204, 204, 0.937);
+    border-right: 1px solid rgba(206, 204, 204, 0.937);
+    background-color: rgba(231, 230, 230, 0.937);
+    align-content: space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align:left;
+}
+
+p{
+    margin-top:25px;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 15px;
+    color:rgba(157, 155, 155, 0.923);
+}
+
+h1{
+    font-family: 'Courgette', cursive;
+    color:rgba(186, 117, 186, 0.674);
+    font-size: 70px;
+    opacity:0.7;
+}
+
+input{
+    width: 325px;
+    height:47px;
+    background-color: rgba(231, 230, 230, 0.937);
+    font-size: 20px;
+    font-family: 'Unbounded', sans-serif;
+    color:rgb(134, 132, 132);
+    border-bottom: 1px solid gray;
+    border-left: 0px;
+    border-top: 0px;
+    border-right: 0px;
+}
+
+input:focus{
+    outline: none;
+    color:rgb(134, 132, 132);
+    border-bottom: 1px solid gray;
+    border-left: 0px;
+    border-top: 0px;
+    border-right: 0px;
+}
+
+ul {
+   list-style: none;
+    margin:0px;
+}
+
+.draw1{
+    width:326px;
+    height: 5px;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    border-bottom: 2px solid gray;
+    border-style: groove;
+}
+.draw2{
+    width:322px;
+    height: 5px;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    border-bottom: 2px solid gray;
+    border-style: groove;
+   }
