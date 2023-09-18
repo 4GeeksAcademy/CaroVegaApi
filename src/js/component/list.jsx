@@ -88,6 +88,9 @@ useEffect(() => {
                     <div className="numbertasks p-1">
                         <p>{elementlist.length} item left</p>
                     </div>
+                    <div>
+                        <button>clean</button>
+                    </div>
                     
                 </div>  
                   
