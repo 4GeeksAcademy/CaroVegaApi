@@ -7,10 +7,10 @@ const List = ( ) => {
     const [change, setChange]= useState({});
     const [invisible, setinVisible]= useState([]);
 
-const update = () =>{
+const update = (todos) =>{
     fetch('https://playground.4geeks.com/apis/fake/todos/user/caro', {
     method: 'PUT', // or 'POST'
-    body: JSON.stringify(data), // los datos pueden ser una `cadena` o un {objeto} que proviene de algún lugar más arriba en nuestra aplicación
+    body: JSON.stringify(todos), // los datos pueden ser una `cadena` o un {objeto} que proviene de algún lugar más arriba en nuestra aplicación
     headers:{
     'Content-Type': 'application/json'
     }
@@ -65,7 +65,10 @@ function offdelete(){
 }
 
 useEffect(() => {
-   update(elementlist);
+    if(elementlist.length===0){
+        update({label:"",done:false})
+    }else{
+   update(elementlist);}
   }, [elementlist]);
 
 	return (
