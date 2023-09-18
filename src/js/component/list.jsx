@@ -71,6 +71,11 @@ useEffect(() => {
    update(elementlist);}
   }, [elementlist]);
 
+function handleClean(){
+    setElementList([]);
+    setChange({label:"",done:false});
+
+}
 	return (
             
                 <div className="tasklist" >
@@ -88,8 +93,8 @@ useEffect(() => {
                     <div className="numbertasks p-1">
                         <p>{elementlist.length} item left</p>
                     </div>
-                    <div>
-                        <button>clean</button>
+                    <div className ="contentbutton p-2">
+                        <button class="btn btn-secondary" onClick={handleClean}>Clean Tasks</button>
                     </div>
                     
                 </div>  
