@@ -8,6 +8,8 @@ const List = ( ) => {
     const [invisible, setinVisible]= useState([]);
     const [numTask, setNumtask]=useState("");
 
+    const localStorageKey = 'todoList';
+
     const url = 'https://playground.4geeks.com/apis/fake/todos/user/caro123';
 
     useEffect(() => {
@@ -31,21 +33,30 @@ const List = ( ) => {
         }
     })
     .then(estadoUsuario => {
-        console.log(estadoUsuario)
+        console.log("Estado del usuario:",estadoUsuario)
     }
      )
     .catch(error => console.error(error));
     };
 
     const getlist = () =>{
-        const savedData = JSON.parse(localStorage.getItem('data'));
-        setElementList(savedData || []);
-        fetch(url, {
+        try{
+        
+        const savedData = JSON.parse(localStorage.getItem(localStorageKey));
+      console.log('Datos recuperados de localStorage:', savedData);
+
+      if (savedData && Array.isArray(savedData)) {
+        setElementList(savedData);
+      } else {
+        // Si no hay datos en el localStorage, puedes inicializarlo con un valor predeterminado
+        localStorage.setItem(localStorageKey, JSON.stringify([]));
+      }
+    fetch(url, {
         method: 'GET', // or 'POST'
         headers:{
         'Content-Type': 'application/json',
         },
-        })
+    })
         .then(res => {
             if (res.status>= 200 && res.status<=300){
                 console.log("el request se hizo bien");
@@ -59,11 +70,18 @@ const List = ( ) => {
         .then(data => {
             if (JSON.stringify(data) !== JSON.stringify(elementlist)) {
                setElementList(data);
+               console.log('Datos actualizados desde el servidor:', data);
             }
           })
         .catch(error => console.error(error));
-    };    
+    } catch (error) {
+        console.error('Error al recuperar datos de localStorage:', error);
+      }
+    };   
     
+    const updateLocalStorage = (data) => {
+        localStorage.setItem(localStorageKey, JSON.stringify(data));
+      };
 
 const update = (todos) =>{
     fetch(url, {
@@ -83,7 +101,9 @@ const update = (todos) =>{
 	
     })
     .then(data =>{
-        console.log(data);
+        console.log('Datos actualizados en el servidor:', data);
+        // Luego de actualizar en el servidor, actualiza en localStorage
+      updateLocalStorage(todos); // Llamada a updateLocalStorage
     })
     .catch(error => console.error(error));
     numlist();
@@ -153,7 +173,7 @@ function numlist(){
     let num ="";
     if(elementlist.some((item) => item.label === "No hay tareas")){
         num = "0 item left";
-            setNumtask(num);
+            
           } else if(elementlist.length ===1){
             num = "1 item left";
           }
