@@ -3,12 +3,12 @@ import {AiFillCloseCircle} from "react-icons/ai";
 
 
 const List = ( ) => {
-    const [elementlist, setElementList]=useState([]);
+    const [elementlist, setElementList]=useState(null);
     const [change, setChange]= useState({label:""});
     const [invisible, setinVisible]= useState([]);
     const [numTask, setNumtask]=useState("");
 
-    const localStorageKey = 'todoList';
+    
 
     const url = 'https://playground.4geeks.com/apis/fake/todos/user/caro123';
 
@@ -40,18 +40,7 @@ const List = ( ) => {
     };
 
     const getlist = () =>{
-        try{
-        
-        const savedData = JSON.parse(localStorage.getItem(localStorageKey));
-      console.log('Datos recuperados de localStorage:', savedData);
-
-      if (savedData && Array.isArray(savedData)) {
-        setElementList(savedData);
-      } else {
-        // Si no hay datos en el localStorage, puedes inicializarlo con un valor predeterminado
-        localStorage.setItem(localStorageKey, JSON.stringify([]));
-      }
-    fetch(url, {
+       fetch(url, {
         method: 'GET', // or 'POST'
         headers:{
         'Content-Type': 'application/json',
@@ -70,18 +59,13 @@ const List = ( ) => {
         .then(data => {
             if (JSON.stringify(data) !== JSON.stringify(elementlist)) {
                setElementList(data);
-               console.log('Datos actualizados desde el servidor:', data);
+               
             }
           })
         .catch(error => console.error(error));
-    } catch (error) {
-        console.error('Error al recuperar datos de localStorage:', error);
-      }
     };   
     
-    const updateLocalStorage = (data) => {
-        localStorage.setItem(localStorageKey, JSON.stringify(data));
-      };
+    
 
 const update = (todos) =>{
     fetch(url, {
@@ -101,9 +85,8 @@ const update = (todos) =>{
 	
     })
     .then(data =>{
-        console.log('Datos actualizados en el servidor:', data);
-        // Luego de actualizar en el servidor, actualiza en localStorage
-      updateLocalStorage(todos); // Llamada a updateLocalStorage
+        console.log( data);
+        
     })
     .catch(error => console.error(error));
     numlist();
@@ -127,7 +110,11 @@ function handleKeyDown (event) {
 
 function eliminartarea(param){
     const eliminar=elementlist[param];
+    if(elementlist.length==1){
+        handleClean();
+    }else{
     setElementList(prevElementlist => prevElementlist.filter(element=>element != eliminar));
+    }
     numlist();
 };
 
@@ -157,10 +144,9 @@ function offdelete(){
 };
 
 useEffect(() => {
-    if(elementlist.length===0 || elementlist.some((item)=>item.label==="No hay tareas")){
-        update([{label:"No hay tareas",done:false}]);
-    }else{
-   update(elementlist);}
+   if (elementlist != null){
+    update(elementlist);
+   }
   }, [elementlist]);
 
 
